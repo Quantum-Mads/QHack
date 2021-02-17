@@ -3,7 +3,7 @@ import pennylane as qml
 from pennylane import numpy as np
 import sys
 
-
+#All changes should be done ONLY on this method. Test with py simple_circuits_20_template.py < 1.in and py simple_circuits_20_template.py < 2.in
 def simple_circuits_20(angle):
     """The code you write for this challenge should be completely contained within this function
     between the # QHACK # comment markers.
@@ -22,21 +22,26 @@ def simple_circuits_20(angle):
     # QHACK #
 
     # Step 1 : initalize a device
-
+    num_wires = 1
+    dev = qml.device('default.qubit', wires=num_wires)
     # Step 2 : Create a quantum circuit and qnode
-
+    @qml.qnode(dev)
+    def circuit(param):
+        qml.RX(param, wires=0) # a single-wire parameterized gate
+        # Finally we return a measurement of an operator on a wire
+        return qml.probs(0)
     # Step 3 : Run the qnode
-    # prob = ?
+    prob = circuit(angle)
 
     # QHACK #
-    return prob
+    return prob[0]
 
 
 if __name__ == "__main__":
     # DO NOT MODIFY anything in this code block
 
     # Load and process input
-    angle_str = sys.stdin.read()
+    angle_str = sys.stdin.read() #Enter angle, push ENTER, push Ctrl+Z,push ENTER
     angle = float(angle_str)
 
     ans = simple_circuits_20(angle)
